@@ -1,4 +1,11 @@
-EXCLUDE = --exclude=.git --exclude=Makefile --exclude=.gitignore --exclude=*.pyc --exclude=config.py --exclude=.DS_STORE --exclude=.sass-cache/
+EXCLUDE = --exclude=.git \
+					--exclude=Makefile \
+					--exclude=.gitignore \
+					--exclude=*.pyc \
+					--exclude=config.py \
+					--exclude=.DS_STORE \
+					--exclude=.sass-cache/ \
+					--exclude=.test_data/
 OPT = -cropgtv --cvs-exclude --delete $(EXCLUDE)
 LOCAL_PATH = .
 
