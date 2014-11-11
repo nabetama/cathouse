@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from __future__ import print_function
+import simplejson as json
 import os
 import tornado.ioloop
 import tornado.web
@@ -13,7 +14,7 @@ class Root(MainHandler):
         self.render("index.html")
 
     def post(self):
-        s_json = self.get_argument('payload')
+        s_json = json.loads(self.request.body)
         print(s_json)
 
 application = tornado.web.Application([
