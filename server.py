@@ -32,7 +32,7 @@ class Root(MainHandler):
         
 
     def send_hipchat(self, payload_body):
-        print(json.loads(payload_body))
+        print(payload_body)
 
 application = tornado.web.Application([
     (r"/", Root)
