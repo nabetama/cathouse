@@ -3,7 +3,7 @@ EXCLUDE = --exclude=.git \
 					--exclude=.gitignore \
 					--exclude=*.pyc \
 					--exclude=config.py \
-					--exclude=.DS_STORE \
+					--exclude=.DS_Store \
 					--exclude=.sass-cache/ \
 					--exclude=.test_data/
 OPT = -cropgtv --cvs-exclude --delete $(EXCLUDE)
