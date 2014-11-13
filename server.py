@@ -26,7 +26,6 @@ class Root(MainHandler):
         secret_token = os.environ['GITHUB_WEBHOOK_SECRET_TOKEN']
         signature    = 'sha1=' + hmac.new(secret_token, payload_body, hashlib.sha1).hexdigest()
         if self.request.headers['X-Hub-Signature'] != signature:
-            print('GITHUB_WEBHOOK_SECRET_TOKEN not equal signature')
             return False
         return True
         
