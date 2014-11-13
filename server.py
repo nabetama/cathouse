@@ -1,6 +1,9 @@
 # coding: utf-8
 
 from __future__ import print_function
+
+import hmac
+import hashlib
 import simplejson as json
 import os
 import tornado.ioloop
@@ -14,8 +17,22 @@ class Root(MainHandler):
         self.render("index.html")
 
     def post(self):
-        s_json = json.loads(self.request.body)
-        print(s_json)
+        payload_body = self.request.body
+        if not self.is_verify(payload_body):
+            return
+        self.send_hipchat(payload_body)
+
+    def is_verify(self, payload_body):
+        secret_token = os.environ['GITHUB_WEBHOOK_SECRET_TOKEN']
+        signature    = 'sha1=' + hmac.new(secret_token, payload_body, hashlib.sha1).hexdigest()
+        if self.request.headers['X-Hub-Signature'] != signature:
+            print('GITHUB_WEBHOOK_SECRET_TOKEN not equal signature')
+            return False
+        return True
+        
+
+    def send_hipchat(self, payload_body):
+        print(json.loads(payload_body))
 
 application = tornado.web.Application([
     (r"/", Root)
