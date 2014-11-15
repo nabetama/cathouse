@@ -58,3 +58,6 @@ target/
 
 # for mac
 .DS_Store
+
+# configs
+config.json
