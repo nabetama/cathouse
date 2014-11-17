@@ -8,6 +8,7 @@ class Config(object):
         json_data = json.load(f)
         self.token = json_data['token']
         self.room_id = json_data['room_id']
+        self.color = json_data['color']
 
     def get_room_id(self, room):
         return self.room_id.get(room)
@@ -21,5 +22,5 @@ class HipChat(object):
     def send_message_to(self, room_id, message):
         hipchat = HypChat(self.token)
         room = hipchat.get_room(config.get_room_id('bot'))
-        room.notification(message, color=config.COLOR)
+        room.notification(message, color=config.color)
 

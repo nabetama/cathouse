@@ -8,6 +8,8 @@ import os
 import tornado.ioloop
 import tornado.web
 
+from models.hipchat import HipChat
+
 class MainHandler(tornado.web.RequestHandler):
     pass
 
@@ -27,10 +29,10 @@ class Root(MainHandler):
         if self.request.headers['X-Hub-Signature'] != signature:
             return False
         return True
-        
 
     def send_hipchat(self, payload_body):
-        print(payload_body)
+        hc = HipChat()
+        hc.send_message_to(room_id='', message=payload_body)
 
 application = tornado.web.Application([
     (r"/", Root)
