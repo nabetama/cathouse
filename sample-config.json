@@ -1,0 +1,8 @@
+{
+  "token": "<Your hipchat api v2 token>",
+  "room_id": {
+    "key": "<Room id which is the target of a notice.>"
+  },
+  "color": "purple"
+}
+
