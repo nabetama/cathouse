@@ -9,10 +9,6 @@ class Config(object):
         self.token = json_data['token']
         self.room_id = json_data['room_id']
 
-    @property
-    def token(self):
-        return self.token
-
     def get_room_id(self, room):
         return self.room_id.get(room)
 config=Config()
