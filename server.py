@@ -4,7 +4,6 @@ from __future__ import print_function
 
 import hmac
 import hashlib
-import simplejson as json
 import os
 import tornado.ioloop
 import tornado.web
