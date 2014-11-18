@@ -36,7 +36,7 @@ class Root(MainHandler):
         return True
 
     def send_hipchat(self, payload_body):
-        hc = HipChat()
+        hc = HipChat(Config().token)
         hc.send_message_to(room_id='', message=payload_body)
 
 
