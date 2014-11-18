@@ -5,10 +5,15 @@ from __future__ import print_function
 import hmac
 import hashlib
 import os
+from os import path
+import simplejson as json
 import tornado.ioloop
 import tornado.web
 
 from models.hipchat import HipChat
+
+
+BASE_DIR = path.dirname(path.abspath(__file__))
 
 class MainHandler(tornado.web.RequestHandler):
     pass
@@ -33,6 +38,19 @@ class Root(MainHandler):
     def send_hipchat(self, payload_body):
         hc = HipChat()
         hc.send_message_to(room_id='', message=payload_body)
+
+
+class Config(object):
+    def __init__(self):
+        f = open(BASE_DIR + '/config.json')
+        json_data = json.load(f)
+        self.token = json_data['token']
+        self.room_id = json_data['room_id']
+        self.color = json_data['color']
+
+    def get_room_id(self, room):
+        return self.room_id.get(room)
+
 
 application = tornado.web.Application([
     (r"/", Root)
