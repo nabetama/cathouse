@@ -61,3 +61,6 @@ target/
 
 # configs
 config.json
+
+# ctags
+tags
