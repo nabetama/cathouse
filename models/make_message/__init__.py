@@ -49,7 +49,20 @@ class delete(XGitHubEventBase):
 
 class issue_comment(XGitHubEventBase):
     "Any time an Issue is commented on."
-    pass
+    @classmethod
+    def message(cls, data):
+        s = '{user} commented on <a href="{repos_url}">{repos}</a>.<br />' + \
+            'Title: {issue_title}<br />' + \
+            '<a href="{issue_url}">Show issue.</a>'
+        s = s.format(
+                user = data['sender']['login'],
+                repos_url = data['repository']['html_url'],
+                repos = data['repository']['full_name'],
+                issue_title = data['issue']['title'],
+                issue_url = data['issue']['url'],
+                )
+        return s
+
 
 
 class issues(XGitHubEventBase):
