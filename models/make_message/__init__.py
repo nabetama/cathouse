@@ -24,7 +24,7 @@ class Writer(object):
 
 
 class XGitHubEventBase(object):
-    AVATOR = '<img src="{}" width="30px" height="30px;"/>'
+    AVATAR = '<img src="{avatar}" width="30px" height="30px;"/>'
     @classmethod
     def message(cls, data):
         pass
@@ -41,10 +41,10 @@ class create(XGitHubEventBase):
     "Any time a Branch or Tag is created."
     @classmethod
     def message(cls, data):
-        s = cls.AVATOR
+        s = cls.AVATAR
         s += '{user} created {kind} on <a href="{repos_url}">{repos}</a>.<br />'
         msg = s.format(
-                avator = data['sender']['avatar_url'],
+                avatar = data['sender']['avatar_url'],
                 user = data['sender']['login'],
                 kind = data['ref_type'],
                 repos_url = data['repository']['html_url'],
@@ -62,12 +62,12 @@ class issue_comment(XGitHubEventBase):
     "Any time an Issue is commented on."
     @classmethod
     def message(cls, data):
-        s = cls.AVATOR
+        s = cls.AVATAR
         s += '{user} commented on <a href="{repos_url}">{repos}</a>.<br />' + \
             'Title: {issue_title}<br />' + \
             '<a href="{issue_url}">Show issue.</a>'
         msg = s.format(
-                avator = data['sender']['avatar_url'],
+                avatar = data['sender']['avatar_url'],
                 user = data['sender']['login'],
                 repos_url = data['repository']['html_url'],
                 repos = data['repository']['full_name'],
@@ -108,12 +108,12 @@ class push(XGitHubEventBase):
     """
     @classmethod
     def message(cls, data):
-        s = cls.AVATOR
+        s = cls.AVATAR
         s += '{commiter} pushed to <a href="{repos_url}">{repos}</a>.<br />' + \
             'Commit Log: {commit_message:<15}...<br />' + \
             '<a href="{commits_url}">Show diff.</a>'
         msg = s.format(
-                avator          = data['sender']['avatar_url'],
+                avatar          = data['sender']['avatar_url'],
                 commiter        = data['pusher']['name'],
                 repos_url       = data['repository']['html_url'],
                 repos           = data['repository']['full_name'],
