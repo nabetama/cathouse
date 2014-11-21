@@ -55,7 +55,18 @@ class create(XGitHubEventBase):
 
 class delete(XGitHubEventBase):
     "Any time a Branch or Tag is deleted."
-    pass
+    @classmethod
+    def message(cls, data):
+        s = cls.AVATAR
+        s += 'Deleted {kind}({ref}) at <a href="{link}">{repos}</a>'
+        msg = s.format(
+                avatar = data['sender']['avatar_url'],
+                kind   = data['ref_type'],
+                ref    = data['ref'],
+                link   = data['repository']['html_url'],
+                repos = data['repository']['full_name'],
+                )
+        return msg
 
 
 class issue_comment(XGitHubEventBase):
