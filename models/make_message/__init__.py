@@ -81,5 +81,17 @@ class push(XGitHubEventBase):
     Any Git push to a Repository, including editing tags or branches. Commits via API actions that
     update references are also counted. This is the default event.
     """
-    pass
+    @classmethod
+    def message(cls, data):
+        s = '{commiter} pushed to <a href="{repos_url}">{repos}</a>.<br />' + \
+            'Commit Log: {commit_message:<15}' + \
+            '<a href="{commits_url}">Show diff.</a>'
+        s = s.format(
+                commiter        = data['pusher']['name'],
+                repos_url       = data['repository']['html_url'],
+                repos           = data['repository']['full_name'],
+                commit_message  = data['head_commit']['message'].encode('utf-8'),
+                commits_url     = data['head_commit']['url'],
+                )
+        return s
 
