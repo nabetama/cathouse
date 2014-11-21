@@ -138,11 +138,12 @@ class push(XGitHubEventBase):
         if data.get("deleted"):
             return delete_branch.message(data)
         s = cls.AVATAR
-        s += '{commiter} pushed to <a href="{repos_url}">{repos}</a>.<br />' + \
+        s += '{commiter} pushed to {ref} in <a href="{repos_url}">{repos}</a>.<br />' + \
             'Commit Log: {commit_message:<15}...<br />' + \
             '<a href="{commits_url}">Show diff.</a>'
         msg = s.format(
                 avatar          = data['sender']['avatar_url'],
+                ref             = data['ref'],
                 commiter        = data['pusher']['name'],
                 repos_url       = data['repository']['html_url'],
                 repos           = data['repository']['full_name'],
