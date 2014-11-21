@@ -84,7 +84,7 @@ class push(XGitHubEventBase):
     @classmethod
     def message(cls, data):
         s = '{commiter} pushed to <a href="{repos_url}">{repos}</a>.<br />' + \
-            'Commit Log: {commit_message:<15}' + \
+            'Commit Log: {commit_message:<15}...<br />' + \
             '<a href="{commits_url}">Show diff.</a>'
         s = s.format(
                 commiter        = data['pusher']['name'],
