@@ -11,6 +11,7 @@ import tornado.ioloop
 import tornado.web
 
 from models.hipchat import HipChat
+from models.make_message import Writer
 
 
 BASE_DIR = path.dirname(path.abspath(__file__))
@@ -26,7 +27,9 @@ class Root(MainHandler):
         payload_body = self.request.body
         if not self.is_verify(payload_body):
             return
-        self.send_hipchat(payload_body)
+        writer = Writer(self.request, payload_body)
+        message = writer.write(msg_type='html')
+        self.send_hipchat(message)
 
     def is_verify(self, payload_body):
         secret_token = os.environ['GITHUB_WEBHOOK_SECRET_TOKEN']
