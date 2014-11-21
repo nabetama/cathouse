@@ -39,7 +39,17 @@ class commit_comment(XGitHubEventBase):
 
 class create(XGitHubEventBase):
     "Any time a Branch or Tag is created."
-    pass
+    @classmethod
+    def message(cls, data):
+        s = '<img src="{avator}" width="30px;" height="30px;"/>{user} created {kind} on <a href="{repos_url}">{repos}</a>.<br />'
+        s = s.format(
+                avator = data['sender']['avatar_url'],
+                user = data['sender']['login'],
+                kind = data['ref_type'],
+                repos_url = data['repository']['html_url'],
+                repos = data['repository']['full_name'],
+                )
+        return s
 
 
 class delete(XGitHubEventBase):
@@ -62,7 +72,6 @@ class issue_comment(XGitHubEventBase):
                 issue_url = data['issue']['url'],
                 )
         return s
-
 
 
 class issues(XGitHubEventBase):
