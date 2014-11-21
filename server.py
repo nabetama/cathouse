@@ -5,10 +5,16 @@ from __future__ import print_function
 import hmac
 import hashlib
 import os
+from os import path
+import simplejson as json
 import tornado.ioloop
 import tornado.web
 
 from models.hipchat import HipChat
+from models.make_message import Writer
+
+
+BASE_DIR = path.dirname(path.abspath(__file__))
 
 class MainHandler(tornado.web.RequestHandler):
     pass
@@ -21,7 +27,9 @@ class Root(MainHandler):
         payload_body = self.request.body
         if not self.is_verify(payload_body):
             return
-        self.send_hipchat(payload_body)
+        writer = Writer(self.request, payload_body)
+        message = writer.write(msg_type='html')
+        self.send_hipchat(message)
 
     def is_verify(self, payload_body):
         secret_token = os.environ['GITHUB_WEBHOOK_SECRET_TOKEN']
@@ -31,8 +39,21 @@ class Root(MainHandler):
         return True
 
     def send_hipchat(self, payload_body):
-        hc = HipChat()
+        hc = HipChat(Config().token)
         hc.send_message_to(room_id='', message=payload_body)
+
+
+class Config(object):
+    def __init__(self):
+        f = open(BASE_DIR + '/config.json')
+        json_data = json.load(f)
+        self.token = json_data['token']
+        self.room_id = json_data['room_id']
+        self.color = json_data['color']
+
+    def get_room_id(self, room):
+        return self.room_id.get(room)
+
 
 application = tornado.web.Application([
     (r"/", Root)
