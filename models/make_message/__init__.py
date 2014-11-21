@@ -69,6 +69,22 @@ class delete(XGitHubEventBase):
         return msg
 
 
+class delete_branch(XGitHubEventBase):
+    "Deleted branch"
+
+    @classmethod
+    def message(cls, data):
+        s = cls.AVATAR
+        s += 'Deleted branch {kind} at <a href="{link}">{repos}</a>'
+        msg = s.format(
+                avatar = data["sender"]["avatar_url"],
+                kind   = data["ref"],
+                link   = data['repository']['html_url'],
+                repos  = data['repository']['full_name'],
+                )
+        return msg
+
+
 class issue_comment(XGitHubEventBase):
     "Any time an Issue is commented on."
     @classmethod
@@ -119,6 +135,8 @@ class push(XGitHubEventBase):
     """
     @classmethod
     def message(cls, data):
+        if data.get("deleted"):
+            return delete_branch.message(data)
         s = cls.AVATAR
         s += '{commiter} pushed to <a href="{repos_url}">{repos}</a>.<br />' + \
             'Commit Log: {commit_message:<15}...<br />' + \
