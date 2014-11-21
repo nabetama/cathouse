@@ -24,6 +24,7 @@ class Writer(object):
 
 
 class XGitHubEventBase(object):
+    AVATOR = '<img src="{}" width="30px" height="30px;"/>'
     @classmethod
     def message(cls, data):
         pass
@@ -34,7 +35,6 @@ class commit_comment(XGitHubEventBase):
     @classmethod
     def message(cls, data):
         pass
-
 
 
 class create(XGitHubEventBase):
