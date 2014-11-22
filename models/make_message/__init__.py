@@ -40,7 +40,6 @@ class commit_comment(XGitHubEventBase):
         s += '{user} commented <a href="{comit_url}">{repos}</a>.<br />' +\
              'Comment: {comment}...' +\
              ''
-        print data['comment']
         msg = s.format(
                 user      = data['sender']['login'],
                 comit_url = data['comment']['html_url'],
