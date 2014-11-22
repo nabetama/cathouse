@@ -22,7 +22,7 @@ default:
 	@echo " make bacuum"
 	@echo " make dry-bacuum"
 
-install: rsync restart
+install: rsync copy restart
 install-lite: rsync-lite restart
 bacuum: take
 dry-install: dry-rsync
@@ -46,8 +46,11 @@ dry-take:
 	$(MAKE) take \
 			OPT="--dry-run $(OPT)"
 
-# restart:
-# 	ssh $(REMOTE_USER)@$(REMOTE_HOST) 'sudo /etc/init.d/cathouse restart'
+copy:
+	ssh $(REMOTE_USER)@$(REMOTE_HOST) 'cp -R ~/git/cathouse /usr/share/nginx'
+
+restart:
+	ssh $(REMOTE_USER)@$(REMOTE_HOST) '/etc/init.d/cathouse restart'
 
 test:
 	py.test tests/ -v
