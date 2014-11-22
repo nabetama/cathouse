@@ -27,14 +27,27 @@ class XGitHubEventBase(object):
     AVATAR = '<img src="{avatar}" width="30px" height="30px;"/>'
     @classmethod
     def message(cls, data):
-        pass
+        return cls.AVATAR.format(
+                avatar = data['sender']['avatar_url'],
+                )
 
 
 class commit_comment(XGitHubEventBase):
     "Any time a Commit is commented on."
     @classmethod
     def message(cls, data):
-        pass
+        s = super(commit_comment, cls()).message(data)
+        s += '{user} commented <a href="{comit_url}">{repos}</a>.<br />' +\
+             'Comment: {comment}...' +\
+             ''
+        print data['comment']
+        msg = s.format(
+                user      = data['sender']['login'],
+                comit_url = data['comment']['html_url'],
+                repos     = data['repository']['full_name'],
+                comment   = data['comment']['body'].encode('utf-8'),
+                )
+        return msg
 
 
 class create(XGitHubEventBase):
