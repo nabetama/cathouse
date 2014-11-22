@@ -56,11 +56,11 @@ class create(XGitHubEventBase):
         s = super(commit_comment, cls()).message(data)
         s += '{user} created {kind} on <a href="{repos_url}">{repos}</a>.<br />'
         msg = s.format(
-                avatar = data['sender']['avatar_url'],
-                user = data['sender']['login'],
-                kind = data['ref_type'],
+                avatar    = data['sender']['avatar_url'],
+                user      = data['sender']['login'],
+                kind      = data['ref_type'],
                 repos_url = data['repository']['html_url'],
-                repos = data['repository']['full_name'],
+                repos     = data['repository']['full_name'],
                 )
         return msg
 
@@ -76,7 +76,7 @@ class delete(XGitHubEventBase):
                 kind   = data['ref_type'],
                 ref    = data['ref'],
                 link   = data['repository']['html_url'],
-                repos = data['repository']['full_name'],
+                repos  = data['repository']['full_name'],
                 )
         return msg
 
@@ -106,12 +106,12 @@ class issue_comment(XGitHubEventBase):
             'Title: {issue_title}<br />' + \
             '<a href="{issue_url}">Show issue.</a>'
         msg = s.format(
-                avatar = data['sender']['avatar_url'],
-                user = data['sender']['login'],
-                repos_url = data['repository']['html_url'],
-                repos = data['repository']['full_name'],
+                avatar      = data['sender']['avatar_url'],
+                user        = data['sender']['login'],
+                repos_url   = data['repository']['html_url'],
+                repos       = data['repository']['full_name'],
                 issue_title = data['issue']['title'],
-                issue_url = data['issue']['url'],
+                issue_url   = data['issue']['url'],
                 )
         return msg
 
