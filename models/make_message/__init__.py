@@ -53,7 +53,7 @@ class create(XGitHubEventBase):
     "Any time a Branch or Tag is created."
     @classmethod
     def message(cls, data):
-        s = cls.AVATAR
+        s = super(commit_comment, cls()).message(data)
         s += '{user} created {kind} on <a href="{repos_url}">{repos}</a>.<br />'
         msg = s.format(
                 avatar = data['sender']['avatar_url'],
@@ -69,7 +69,7 @@ class delete(XGitHubEventBase):
     "Any time a Branch or Tag is deleted."
     @classmethod
     def message(cls, data):
-        s = cls.AVATAR
+        s = super(commit_comment, cls()).message(data)
         s += 'Deleted {kind}({ref}) at <a href="{link}">{repos}</a>'
         msg = s.format(
                 avatar = data['sender']['avatar_url'],
@@ -86,7 +86,7 @@ class delete_branch(XGitHubEventBase):
 
     @classmethod
     def message(cls, data):
-        s = cls.AVATAR
+        s = super(commit_comment, cls()).message(data)
         s += 'Deleted branch {kind} at <a href="{link}">{repos}</a>'
         msg = s.format(
                 avatar = data["sender"]["avatar_url"],
@@ -101,7 +101,7 @@ class issue_comment(XGitHubEventBase):
     "Any time an Issue is commented on."
     @classmethod
     def message(cls, data):
-        s = cls.AVATAR
+        s = super(commit_comment, cls()).message(data)
         s += '{user} commented on <a href="{repos_url}">{repos}</a>.<br />' + \
             'Title: {issue_title}<br />' + \
             '<a href="{issue_url}">Show issue.</a>'
